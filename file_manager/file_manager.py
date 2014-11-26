@@ -14,17 +14,21 @@ class FileManager(QtGui.QWidget):
         super(FileManager, self).__init__()
         self.commander_window = commander_window
 
+    def enter_file_name(self):
+        filename, ok = QtGui.QInputDialog.getText(self, 'Create new file', 'Enter a file name')
+        if ok:
+             return str(filename)
 
     def add_new_file(self):
-
         if (self.commander_window.tab_left.active):
             print self.commander_window.tab_left.current_folder_path + "L"
-            fileName = QtGui.QFileDialog.getSaveFileName(self, 'Add New File',self.commander_window.tab_left.current_folder_path, selectedFilter='*.txt')
+            self.enter_file_name()
+
         elif (self.commander_window.tab_right.active):
             print self.commander_window.tab_right.current_folder_path + "R"
-            fileName = QtGui.QFileDialog.getSaveFileName(self, 'Add New File',self.commander_window.tab_right.current_folder_path, selectedFilter='*.txt')
+            self.enter_file_name()
         else:
-            print "filename"
+            print "Panel is not selected"
 
 
 
