@@ -3,6 +3,7 @@ Created on 25/11/2014
 
 @author: Jafeth Garcia
 '''
+import os
 from PyQt4 import QtCore, QtGui
 
 class PanelFilePath(QtGui.QWidget):
@@ -24,7 +25,7 @@ class PanelFilePath(QtGui.QWidget):
         self.path_layout.setSpacing(0)
         
         self.path_line_edit = QtGui.QLineEdit(self)
-        self.path_line_edit.setEnabled(False)
+        self.path_line_edit.setEnabled(True)
         self.path_layout.addWidget(self.path_line_edit)
         
         self.push_up_dir = QtGui.QPushButton(self)
@@ -38,6 +39,7 @@ class PanelFilePath(QtGui.QWidget):
     '''
     def setup_connections(self):
         self.push_up_dir.clicked.connect(self.goto_parent_clicked_connection)
+        self.path_line_edit.returnPressed.connect(self.update_file_path_connection)
         
     '''
     this connection visually goes to parent folder from current folder
@@ -48,4 +50,12 @@ class PanelFilePath(QtGui.QWidget):
             folder_index = self.window_file_panel.tree_view.model.parent(parent_index)
             self.window_file_panel.goto_folder(folder_index)
     
+    '''
+    this connection visually goes to written path in the path field
+    '''
+    def update_file_path_connection(self):
+        edit_path = str(self.path_line_edit.text())
+        if (os.path.exists(edit_path)):
+            edit_path.replace("/","//")
+            self.window_file_panel.goto_folder(self.window_file_panel.tree_view.model.index(edit_path))
     
