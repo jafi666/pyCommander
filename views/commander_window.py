@@ -7,6 +7,7 @@ from PyQt4 import QtCore, QtGui
 from views.window.window_file_panel import WindowFilePanel
 from views.window.window_menu_bar import WindowMenuBar
 from views.window.window_footer_panel import WindowFooterPanel
+from file_manager.file_manager import FileManager
 
 class CommanderWindow(QtGui.QMainWindow):
     '''
@@ -15,6 +16,7 @@ class CommanderWindow(QtGui.QMainWindow):
     '''
     def __init__(self):
         super(CommanderWindow, self).__init__()
+        self.file_manager = FileManager(self)
         
         self.resize(1024, 800)
         self.setWindowTitle("PyCommander")
@@ -85,16 +87,22 @@ class CommanderWindow(QtGui.QMainWindow):
     def setup_connections(self):
         self.connect(self.tab_left.tree_view, QtCore.SIGNAL("tabPressed"), self.switch_to_right_panel_connection)
         self.connect(self.tab_right.tree_view, QtCore.SIGNAL("tabPressed"), self.switch_to_left_panel_connection)
-    
+        self.tab_right.tree_view.clicked.connect(self.switch_to_right_panel_connection)
+        self.tab_left.tree_view.clicked.connect(self.switch_to_left_panel_connection)
+
     '''
     action to switch from panel right to left panel
     '''
     def switch_to_left_panel_connection(self):
+        self.tab_left.active = True
+        self.tab_right.active = False
         self.tab_left.tree_view.setFocus()
     
     '''
     action to switch from panel left to right panel
     '''
     def switch_to_right_panel_connection(self):
+        self.tab_left.active = False
+        self.tab_right.active = True
         self.tab_right.tree_view.setFocus()
     
