@@ -11,8 +11,9 @@ class WindowMenuBar(QtGui.QMenuBar):
     '''
     def __init__(self, commander_window):
         super(WindowMenuBar, self).__init__(commander_window)
-        self.setup_menu_bar_ui()
         self.commander_window = commander_window
+        self.setup_menu_bar_ui()
+        
     '''
     This method is meant to create all the menu elements on this class
     '''
@@ -29,6 +30,8 @@ class WindowMenuBar(QtGui.QMenuBar):
         self.menuFile.setTitle("Files")
         self.menuFile.addSeparator()
         
+        action_new_file = self.create_menu_bar_action("New File", "Ctrl+N", "Create a new file", self.commander_window.file_manager.add_new_file)
+        self.menuFile.addAction(action_new_file)
         action_quit = self.create_menu_bar_action("Quit", "Ctrl+Q", "Exit from Application", QtGui.qApp.quit)
         self.menuFile.addAction(action_quit)
         

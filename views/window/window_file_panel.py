@@ -17,7 +17,7 @@ class WindowFilePanel(QtGui.QWidget):
     def __init__(self, commander_window):
         super(WindowFilePanel, self).__init__(commander_window.body_container)
         self.commander_window = commander_window
-        
+        self.active = False
         self.set_current_folder()
         self.setup_file_panel_ui()
         
