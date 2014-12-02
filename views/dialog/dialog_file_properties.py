@@ -5,8 +5,9 @@ Created on 24/11/2014
 '''
 from PyQt4 import QtGui
 
+
 class DialogFileProperties(QtGui.QDialog):
-    
+
     def __init__(self):
         '''constructor
         initialize all Dialog elements
