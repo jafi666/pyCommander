@@ -6,10 +6,11 @@ Created on 24/11/2014
 from PyQt4 import QtGui
 
 class DialogFileProperties(QtGui.QDialog):
-    '''
-    classdocs
-    '''
-    def __init__(self, params = None):
-        super(DialogFileProperties, self).__init__(params)
+    
+    def __init__(self):
+        '''constructor
+        initialize all Dialog elements
+        '''
+        super(DialogFileProperties, self).__init__()
         self.setWindowTitle('Properties')
-        self.resize(400,700)
+        self.resize(self.minimumSizeHint())
