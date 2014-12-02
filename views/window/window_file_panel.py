@@ -84,6 +84,26 @@ class WindowFilePanel(QtGui.QWidget):
     '''
     should open the dialog with selected item(s) in the tree to show their properties
     '''    
-    def open_properties_connection(self):
+    def open_properties_connection(self, index):
         print "enter pressed"
+        indexes = self.treeView.selectedIndexes()
+        if len(indexes) > 0:
+       
+            level = 0
+            index = indexes[0]
+            while index.parent().isValid():
+                index = index.parent()
+                level += 1
+           
+            self.menu = QtGui.QMenu(self)
+            if level == 0:
+                self.menu.addAction(self.tr("Edit"))
+            elif level == 1:
+                self.menu.addAction(self.tr("Rename"))
+            elif level == 2:
+                self.menu.addAction(self.tr("Remove"))
+            self.addAction(self.menu.menuAction())
+            
+  
+            
         

@@ -28,23 +28,8 @@ class PanelTreeView(QtGui.QTreeView):
         self.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
         
         self.setup_connections()
-    '''
-    setting up tree view connections 
-    '''
-    def setup_connections(self):
-        self.doubleClicked.connect(self.double_clicked_connection)
-        self.left_clicked[int].connect(self.left_click)
-        self.right_clicked[int].connect(self.right_click)
-        
     
-    def left_click(self, nb):
-        if nb == 1: print('Single left click')
-        else: print('Double left click')
-
-    def right_click(self, nb):
-        if nb == 1: print('Single right click')
-        else: print('Double right click')
-        
+    
     def mousePressEvent(self, event):
         if event.button() == QtCore.Qt.LeftButton:
             self.left_click_count += 1
@@ -62,6 +47,11 @@ class PanelTreeView(QtGui.QTreeView):
             self.right_clicked.emit(self.right_click_count)
         self.left_click_count = self.right_click_count = 0
         
+    
+    
+    '''
+    setting up tree view connections 
+    '''
     '''
     this method captures the events and controls then to be handled properly
     '''
@@ -81,6 +71,27 @@ class PanelTreeView(QtGui.QTreeView):
             self.emit(QtCore.SIGNAL("tabPressed"))
             return True
         return False
+        
+    
+    def setup_connections(self):
+        self.doubleClicked.connect(self.double_clicked_connection)
+        self.left_clicked[int].connect(self.left_click)
+        self.right_clicked[int].connect(self.right_click)
+        
+    
+    def left_click(self, nb):
+        if nb == 1: print('Single left click')
+        else: 
+            print('Double left click')
+
+    def right_click(self, nb):
+        if nb == 1: print('Single right click')
+        else: 
+            print('Double right click')
+            #Call to file_properties_menu_dialog
+            self.window_file_panel.open_properties_connection()
+               
+    
     '''
     this method visually goes deep when current item in the tree is a directory, 
     if the item is not a folder it should try to open the file with OS basis
