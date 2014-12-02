@@ -5,14 +5,23 @@ Created on Nov 24, 2014
 '''
 from PyQt4 import QtCore, QtGui
 
+
 class PanelTreeView(QtGui.QTreeView):
     '''
     constructor class, get a widget to be put on.
     '''
+    left_clicked= QtCore.pyqtSignal(int)
+    right_clicked = QtCore.pyqtSignal(int)
     def __init__(self, window_file_panel):
         super(PanelTreeView, self).__init__(window_file_panel.tab_widget)
         self.window_file_panel = window_file_panel
         self.model = QtGui.QFileSystemModel()
+        
+        self.timer = QtCore.QTimer()
+        self.timer.setInterval(250)
+        self.timer.setSingleShot(True)
+        self.timer.timeout.connect(self.timeout)
+        self.left_click_count = self.right_click_count = 0
         
         self.setModel(self.model)
         self.setItemsExpandable(False)    
@@ -24,6 +33,34 @@ class PanelTreeView(QtGui.QTreeView):
     '''
     def setup_connections(self):
         self.doubleClicked.connect(self.double_clicked_connection)
+        self.left_clicked[int].connect(self.left_click)
+        self.right_clicked[int].connect(self.right_click)
+        
+    
+    def left_click(self, nb):
+        if nb == 1: print('Single left click')
+        else: print('Double left click')
+
+    def right_click(self, nb):
+        if nb == 1: print('Single right click')
+        else: print('Double right click')
+        
+    def mousePressEvent(self, event):
+        if event.button() == QtCore.Qt.LeftButton:
+            self.left_click_count += 1
+            if not self.timer.isActive():
+                self.timer.start()
+        if event.button() == QtCore.Qt.RightButton:
+            self.right_click_count += 1
+            if not self.timer.isActive():
+                self.timer.start()
+
+    def timeout(self):
+        if self.left_click_count >= self.right_click_count:
+            self.left_clicked.emit(self.left_click_count)
+        else:
+            self.right_clicked.emit(self.right_click_count)
+        self.left_click_count = self.right_click_count = 0
         
     '''
     this method captures the events and controls then to be handled properly

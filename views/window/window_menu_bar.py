@@ -35,6 +35,7 @@ class WindowMenuBar(QtGui.QMenuBar):
         action_quit = self.create_menu_bar_action("Quit", "Ctrl+Q", "Exit from Application", QtGui.qApp.quit)
         self.menuFile.addAction(action_quit)
         
+        
         self.addAction(self.menuFile.menuAction())
     
     '''
