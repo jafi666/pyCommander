@@ -64,12 +64,13 @@ class WindowFilePanel(QtGui.QWidget):
         self.tab_widget = QtGui.QWidget()
         self.tab_layout = QtGui.QVBoxLayout(self.tab_widget)
 
+        self.tree_view = PanelTreeView(self)
+
         self.path_widget = PanelFilePath(self)
         self.tab_layout.addWidget(self.path_widget)
 
         # Setting up tree view widget it contains the file system model as
         # attribute
-        self.tree_view = PanelTreeView(self)
         self.tab_layout.addWidget(self.tree_view)
 
         self.status_widget = PanelStatusLabel(self)
@@ -86,8 +87,12 @@ class WindowFilePanel(QtGui.QWidget):
         :param index: a QModelIndex variable used to set the root index
                       of TreeView
         '''
-        self.tree_view.setRootIndex(index)
-        self.set_current_folder(str(self.tree_view.model.filePath(index)))
+        # left index represent the index with current selected row and first
+        # column
+        left_index = index.model().index(
+            index.row(), 0, index.model().parent(index))
+        self.tree_view.setRootIndex(left_index)
+        self.set_current_folder(str(self.tree_view.model.filePath(left_index)))
         self.tree_view.model.setRootPath(self.current_folder_path)
         self.path_widget.path_line_edit.setText(self.current_folder_path)
         if self.current_folder_name != "":

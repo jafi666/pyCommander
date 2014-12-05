@@ -50,6 +50,8 @@ class PanelFilePath(QtGui.QWidget):
         self.push_up_dir.clicked.connect(self.goto_parent_clicked_connection)
         self.path_line_edit.returnPressed.connect(
             self.update_file_path_connection)
+        self.connect(self.window_file_panel.tree_view, QtCore.SIGNAL(
+            "backspacePressed"), self.goto_parent_clicked_connection)
 
     def goto_parent_clicked_connection(self):
         '''This connection visually goes to parent folder from current folder
