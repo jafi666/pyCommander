@@ -5,7 +5,6 @@ Created on Nov 24, 2014
 '''
 
 from PyQt4 import QtGui
-import ctypes
 from models.file_operation import FileOperation
 
 class FileManager(QtGui.QWidget):
@@ -19,6 +18,7 @@ class FileManager(QtGui.QWidget):
         '''
         'Add new file' method displays an input dialog for the file name.
         It does not receive parameters.
+        None is returned when Click on Cancel button
         '''
         filename, ok = QtGui.QInputDialog.getText(self, 'Create new file', 'Enter a file name')
         if ok:
@@ -49,5 +49,6 @@ class FileManager(QtGui.QWidget):
         '''
         'Show empty filename warning' displays a message box related to the file name is empty
         '''
-        ctypes.windll.user32.MessageBoxA(0, "File name cannot be empty", "Create new file", 0)
+        QtGui.QMessageBox.critical(self, "ERROR",
+                                            "File name cannot be empty")
         self.add_new_file()
