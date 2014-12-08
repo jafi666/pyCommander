@@ -21,5 +21,6 @@ class FileOperation(object):
         try:
             filepath = os.path.join(path, filename)
             file_created = open(filepath, "a")
+            return True
         except:
-            print "File is not created"
+            return False

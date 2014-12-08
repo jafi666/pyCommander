@@ -17,14 +17,14 @@ class WindowFileManager(QtGui.QWidget):
 
     def add_new_file(self):
         '''
-        'Add new file' method displays an input dialog for the file name.
-        It does not receive parameters.
+        Add new file: It displays an input dialog for the file name.
+        If the file name is empty, then an error message is displayed to
+        insert a file name.
         None is returned when Click on Cancel button
         '''
-        current_path = self.get_current_path_from_panel_selected()
+        current_path = self.get_current_path_after_a_panel_selected()
         if current_path is None:
-            QtGui.QMessageBox.warning(self, "Notice",
-                                      "You must select a panel first")
+            self.show_error_message("Notice", "You must select a panel first")
             return None
 
         filename, ok = QtGui.QInputDialog.getText(
@@ -34,13 +34,16 @@ class WindowFileManager(QtGui.QWidget):
                 new_filename = str(filename)
                 self.file_operation.create_file(current_path, new_filename)
             else:
-                self.show_empty_filename_message()
+                self.show_error_message("ERROR", "File name cannot be empty")
+                self.add_new_file()
         else:
             return None
 
-    def get_current_path_from_panel_selected(self):
-        '''Get current path from panel' verifies if the right or left panel is selected
+    def get_current_path_after_a_panel_selected(self):
+        '''Get current path after a panel is selected: First it verifies if the right
+        or left panel is selected.
         It returns current path of the panel that is selected.
+        If no panel is selected, then it returns None
         '''
         if (self.commander_window.tab_left.active):
             return self.commander_window.tab_left.current_folder_path
@@ -50,10 +53,14 @@ class WindowFileManager(QtGui.QWidget):
         else:
             return None
 
-    def show_empty_filename_message(self):
-        '''Show empty filename warning' displays a message box related to the
-        file name is empty
+    def show_error_message(self, dialog_name, dialog_message):
+        '''Show error message: It displays a message box.
+        It receives two parameters:
+        dialog_name : It is the name of the dialog
+        dialog_message : It is the message that will be displayed in the dialog
+        For example:
+        self.show_error_message("ERROR", "File name cannot be empty")
         '''
-        QtGui.QMessageBox.critical(self, "ERROR",
-                                   "File name cannot be empty")
-        self.add_new_file()
+        QtGui.QMessageBox.warning(self, dialog_name,
+                                   dialog_message)
+
