@@ -25,13 +25,13 @@ class TreeviewConfig(object):
         '''Determines what columns are going to be displayed
         data is gotten from config.xml
         '''
-        size = self.xml.get("treeview/showColumns/size", 0)
-        if not size:
+        column_size = self.xml.get("treeview/showColumns/column_size", 0)
+        if not column_size:
             self.panel_tree_view.hideColumn(1)
-        ttype = self.xml.get("treeview/showColumns/type", 0)
-        if not ttype:
+        column_type = self.xml.get("treeview/showColumns/type", 0)
+        if not column_type:
             self.panel_tree_view.hideColumn(2)
-        date_modified = self.xml.get(
+        column_date_modified = self.xml.get(
             "treeview/showColumns/dateModified", 0)
-        if not date_modified:
+        if not column_date_modified:
             self.panel_tree_view.hideColumn(3)

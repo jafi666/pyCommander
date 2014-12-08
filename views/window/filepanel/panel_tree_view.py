@@ -73,6 +73,8 @@ class PanelTreeView(QtGui.QTreeView):
         return super(PanelTreeView, self).mousePressEvent(event)
 
     def keyPressEvent(self, event):
+        """this method is going to handle key sequence handling, in order to
+        have key shortcuts over treeview
         """
-        """
+        # TODO: Add checks for key sequences over treeview.
         return super(PanelTreeView, self).keyPressEvent(event)
