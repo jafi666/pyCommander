@@ -5,6 +5,8 @@ Created on Dec 01, 2014
 '''
 
 import os
+
+
 class FileOperation(object):
 
     def __init__(self):
@@ -17,9 +19,7 @@ class FileOperation(object):
         filename: It is a string. Name of the file with the extension
         '''
         try:
-            filepath = os.path.join(path,filename)
+            filepath = os.path.join(path, filename)
             file_created = open(filepath, "a")
         except:
             print "File is not created"
-
-

@@ -4,7 +4,9 @@ Created on Nov 24, 2014
 @author: Jafeth Garcia
 '''
 from PyQt4 import QtCore, QtGui
-from views.window.filepanel.treeview.treeview_connection import TreeviewConnection
+from views.window.filepanel.treeview import TreeviewConnection
+from views.window.filepanel.treeview import TreeviewFileSystemModel
+from views.window.filepanel.treeview import TreeviewConfig
 
 
 class PanelTreeView(QtGui.QTreeView):
@@ -19,7 +21,7 @@ class PanelTreeView(QtGui.QTreeView):
         '''
         super(PanelTreeView, self).__init__(window_file_panel.tab_widget)
         self.window_file_panel = window_file_panel
-        self.model = QtGui.QFileSystemModel()
+        self.model = TreeviewFileSystemModel(self)
 
         self.setModel(self.model)
         self.setItemsExpandable(False)
@@ -29,6 +31,7 @@ class PanelTreeView(QtGui.QTreeView):
         self.current_mouse_event = None
 
         self.setup_connections()
+        self.config = TreeviewConfig(self)
 
     def setup_connections(self):
         '''setting up tree view connections
