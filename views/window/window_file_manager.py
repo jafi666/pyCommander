@@ -37,7 +37,16 @@ class WindowFileManager(QtGui.QWidget):
                 self.show_empty_filename_message()
         else:
             return None
-
+    
+    def delete_list_of_files(self):
+        pass
+    
+    def move_list_of_files(self):
+        pass
+    
+    def copy_list_of_files(self):
+        pass
+    
     def get_current_path_from_panel_selected(self):
         '''Get current path from panel' verifies if the right or left panel is selected
         It returns current path of the panel that is selected.
@@ -49,6 +58,9 @@ class WindowFileManager(QtGui.QWidget):
             return self.commander_window.tab_right.current_folder_path
         else:
             return None
+    
+    def get_list_of_files_selected(self):
+        pass
 
     def show_empty_filename_message(self):
         '''Show empty filename warning' displays a message box related to the
