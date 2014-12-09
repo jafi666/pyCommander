@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<config>
+	<mysql>
+		<host>localhost</host>
+		<user>root</user>
+		<passwd>my secret password</passwd>
+		<db>write-math</db>
+	</mysql>
+	<window>
+		<size>
+			<width>800</width>
+			<height>600</height>
+		</size>
+	</window>
+	<treeview>
+		<showColumns>
+			<name editable="0">1</name>
+			<size>1</size>
+			<type>1</type>
+			<dateModified>1</dateModified>
+			<owner>0</owner>
+			<permissions>0</permissions>
+		</showColumns>
+	</treeview>
+</config>
