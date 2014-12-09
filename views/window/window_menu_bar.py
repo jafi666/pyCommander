@@ -1,73 +1,98 @@
-'''
+"""
 Created on Nov 25, 2014
 
 @author: Jafeth Garcia
-'''
+"""
 from PyQt4 import QtGui
 
+
 class WindowMenuBar(QtGui.QMenuBar):
-    '''
-    Constructor of menu bar for main window
-    '''
+
     def __init__(self, commander_window):
+        """constructor
+        initialize all menu bar elements
+
+        Keyword arguments:
+        :param commander_window: an initialized instance (parent main window)
+                                 of CommanderWindow class
+        """
         super(WindowMenuBar, self).__init__(commander_window)
         self.commander_window = commander_window
         self.setup_menu_bar_ui()
-        
-    '''
-    This method is meant to create all the menu elements on this class
-    '''
+
     def setup_menu_bar_ui(self):
+        """This method is meant to create all the menu elements on this class
+        used only from constructor
+        """
         self.setup_menu_bar_file()
         self.setup_menu_bar_configuration()
         self.setup_menu_bar_help()
-    
-    '''
-    This method is meant to setup up the main menu Files for menu bar 
-    '''
+
     def setup_menu_bar_file(self):
+        """This method is meant to setup up the main menu Files for menu bar
+        used only from constructor
+        """
         self.menuFile = QtGui.QMenu(self)
         self.menuFile.setTitle("Files")
         self.menuFile.addSeparator()
-        
-        action_new_file = self.create_menu_bar_action("New File", "Ctrl+N", "Create a new file", self.commander_window.file_manager.add_new_file)
+
+        # variable to store the add new file connection
+        add_new_file_con = self.commander_window.file_manager.add_new_file
+        action_new_file = self.create_menu_bar_action("New File",
+                                                      "Ctrl+N",
+                                                      "Create a new file",
+                                                      add_new_file_con)
         self.menuFile.addAction(action_new_file)
-        action_quit = self.create_menu_bar_action("Quit", "Ctrl+Q", "Exit from Application", QtGui.qApp.quit)
+        action_quit = self.create_menu_bar_action("Quit", "Ctrl+Q",
+                                                  "Exit from Application",
+                                                  QtGui.qApp.quit)
         self.menuFile.addAction(action_quit)
-        
+
         self.addAction(self.menuFile.menuAction())
-    
-    '''
-    This method is meant to setup up the main menu Configuration for menu bar 
-    '''
+
     def setup_menu_bar_configuration(self):
+        """This method is meant to setup up the main menu Configuration for
+        menu bar used only from constructor
+        """
         self.menuConfiguration = QtGui.QMenu(self)
         self.menuConfiguration.setTitle("Configuration")
         self.addAction(self.menuConfiguration.menuAction())
-    
-    '''
-    This method is meant to setup up the main menu Help for menu bar 
-    '''
+
     def setup_menu_bar_help(self):
-        self.menuHelp = QtGui.QMenu(self)        
+        """This method is meant to setup up the main menu Help for menu bar
+        used only from constructor
+        """
+        self.menuHelp = QtGui.QMenu(self)
         self.menuHelp.setTitle("Help")
-        
-        action_about = self.create_menu_bar_action("About PyComander...", None, "Review About PyCommander Information")
+
+        action_about = self.create_menu_bar_action("About PyComander...", None,
+                                                   "Review About PyCommander\
+                                                   Information")
         self.menuHelp.addAction(action_about)
-        
+
         self.addAction(self.menuHelp.menuAction())
-    
-    '''
-    This method will create an action for the menu bar
-    '''
-    def create_menu_bar_action(self, text, shortcut = None, tip = "", connection = None):
+
+    def create_menu_bar_action(self, text, shortcut=None,
+                               tip="", connection=None):
+        """This method will create an action for the menu bar
+        used only from constructor
+
+        Keyword arguments:
+        :param text: text to be set in the action (ie. "File")
+        :param shortcut: string sequence of keys or single key for shortcut
+                         (ie. "Crtl+Q", default None)
+        :param tip: string to set a tool tip (ie. "System File Menu button",
+                    default empty)
+        :param connection: connection method that will be triggered when Action
+                           is clicked (default: None)
+        """
         action = QtGui.QAction(self)
         action.setText(text)
-        if (shortcut != None):
+        if shortcut is not None:
             action.setShortcut(shortcut)
-        if (tip != "") :
+        if tip != "":
             action.setStatusTip(tip)
-        if connection != None :
+        if connection is not None:
             action.triggered.connect(connection)
-        
+
         return action
