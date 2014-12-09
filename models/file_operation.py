@@ -3,7 +3,6 @@ Created on Dec 01, 2014
 
 @author: Scarlen Quinsamolle
 '''
-
 import os
 
 
@@ -13,10 +12,10 @@ class FileOperation(object):
         super(FileOperation, self).__init__()
 
     def create_file(self, path, filename):
-        '''
-        Create a file given a path and a filename
-        path: String. It is an absolute Path where to create the file
-        filename: It is a string. Name of the file with the extension
+        '''Create a file given a path and a filename
+
+        :param path: String. It is an absolute Path where to create the file
+        :param filename: It is a string. Name of the file with the extension
         '''
         try:
             filepath = os.path.join(path, filename)
