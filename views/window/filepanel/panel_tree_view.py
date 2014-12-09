@@ -4,8 +4,9 @@ Created on Nov 24, 2014
 @author: Jafeth Garcia
 '''
 from PyQt4 import QtCore, QtGui
-from PyQt4.QtGui import QItemSelection
-from PyQt4.Qt import QModelIndex
+from views.window.filepanel.treeview import TreeviewConnection
+from views.window.filepanel.treeview import TreeviewFileSystemModel
+from views.window.filepanel.treeview import TreeviewConfig
 
 
 class PanelTreeView(QtGui.QTreeView):
@@ -20,43 +21,35 @@ class PanelTreeView(QtGui.QTreeView):
         '''
         super(PanelTreeView, self).__init__(window_file_panel.tab_widget)
         self.window_file_panel = window_file_panel
-        self.model = QtGui.QFileSystemModel()
+        self.model = TreeviewFileSystemModel(self)
 
         self.setModel(self.model)
         self.setItemsExpandable(False)
         self.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.setSelectionMode(QtGui.QAbstractItemView.NoSelection)
 
-        self.currentMouseEvent = None
+        self.current_mouse_event = None
 
         self.setup_connections()
+        self.config = TreeviewConfig(self)
 
     def setup_connections(self):
         '''setting up tree view connections
         used only from constructor
         '''
-        self.doubleClicked.connect(self.double_clicked_connection)
-        self.clicked.connect(self.clicked_connection)
-        self.connect(self, QtCore.SIGNAL(
-            "spacePressed"), self.toggle_row)
+        self.connections = TreeviewConnection(self)
 
     def event(self, event):
         '''this method captures the events and control them to be handled properly
         override of native event method
         '''
         if (event.type() == QtCore.QEvent.KeyPress):
-            if self.key_press_event(event):
+            if self.__key_press_event(event):
                 return True
 
         return super(PanelTreeView, self).event(event)
 
-    def mousePressEvent(self, event):
-        """
-        """
-        self.currentMouseEvent = event
-        return super(PanelTreeView, self).mousePressEvent(event)
-
-    def key_press_event(self, event):
+    def __key_press_event(self, event):
         '''this method will create the tab pressed signal which will be listened by
         commander windows to switch between panels
         '''
@@ -72,28 +65,16 @@ class PanelTreeView(QtGui.QTreeView):
 
         return False
 
-    def double_clicked_connection(self, index):
-        '''this method visually goes deep when current item in the tree is a
-        directory, if the item is not a folder it should try to open the file
-        with OS basis
-        '''
-        if index.model().isDir(index):
-            self.window_file_panel.goto_folder(index)
+    def mousePressEvent(self, event):
+        """this method stores the event triggered for mouse pressed so that it
+        can be used later from signals, regular behavior is still working
+        """
+        self.current_mouse_event = event
+        return super(PanelTreeView, self).mousePressEvent(event)
 
-    def clicked_connection(self, index):
+    def keyPressEvent(self, event):
+        """this method is going to handle key sequence handling, in order to
+        have key shortcuts over treeview
         """
-        """
-        if (self.currentMouseEvent.button() == QtCore.Qt.RightButton):
-            self.toggle_row(index)
-
-    def toggle_row(self, index):
-        """
-        """
-        right_index = self.model.index(
-            index.row(), self.model.columnCount() - 1,
-            index.model().parent(index))
-        left_index = self.model.index(
-            index.row(), 0, index.model().parent(index))
-        selected_row = QtGui.QItemSelection(left_index, right_index)
-        self.selectionModel().select(
-            selected_row, QtGui.QItemSelectionModel.Toggle)
+        # TODO: Add checks for key sequences over treeview.
+        return super(PanelTreeView, self).keyPressEvent(event)

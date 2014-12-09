@@ -7,7 +7,8 @@ from PyQt4 import QtCore, QtGui
 from views.window.window_file_panel import WindowFilePanel
 from views.window.window_menu_bar import WindowMenuBar
 from views.window.window_footer_panel import WindowFooterPanel
-from file_manager.file_manager import FileManager
+from views.window.window_file_manager import WindowFileManager
+from views.window.window_config import WindowConfig
 
 
 class CommanderWindow(QtGui.QMainWindow):
@@ -17,12 +18,10 @@ class CommanderWindow(QtGui.QMainWindow):
         initialize all Main Window elements
         """
         super(CommanderWindow, self).__init__()
-        self.file_manager = FileManager(self)
         self.setWindowTitle("PyCommander")
 
         self.setup_window_ui()
-
-        self.resize(self.minimumSizeHint())
+        self.config = WindowConfig(self)
 
     def setup_window_ui(self):
         """setup_window_ui
@@ -30,6 +29,8 @@ class CommanderWindow(QtGui.QMainWindow):
         by constructor
         Used only from constructor
         """
+        self.file_manager = WindowFileManager(self)
+
         self.central_widget = QtGui.QWidget(self)
         self.central_widget.setAutoFillBackground(False)
         self.central_layout = QtGui.QVBoxLayout(self.central_widget)
