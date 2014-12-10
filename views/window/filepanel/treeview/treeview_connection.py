@@ -49,6 +49,9 @@ class TreeviewConnection(object):
         if event_button == QtCore.Qt.RightButton:
             self.treeview_toggle_row(index)
 
+        if not index.model().isDir(index) and event_button == QtCore.Qt.LeftButton:
+            self.panel_tree_view.window_file_panel.rename_file(index)
+
     def treeview_toggle_row(self, index):
         """This method selects and deselects a row into the treevieww main attribute
 
