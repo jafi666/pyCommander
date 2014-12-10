@@ -1,7 +1,7 @@
 '''
 Created on Dec 9, 2014
 
-@author: jafeth garcia
+@author: Jafeth Garcia
 '''
 from PyQt4 import QtCore, QtGui
 from views.dialog.options.treeview import LayoutTabWidget
@@ -13,8 +13,12 @@ _tree_item_list = ["Layout", "Display"]
 class OptionsTreeWidget(QtGui.QTreeWidget):
 
     def __init__(self, dialog_options):
-        '''
-        Constructor
+        '''Constructor
+        initialize all Dialog TreeWidget elements
+
+        Keyword arguments:
+        :param dialog_options: an initialized instance (parent Dialog)
+                               of DialogOptions class
         '''
         super(OptionsTreeWidget, self).__init__(dialog_options.central_widget)
         self.dialog_options = dialog_options
@@ -28,7 +32,8 @@ class OptionsTreeWidget(QtGui.QTreeWidget):
             self.model().index(0, 0), QtGui.QItemSelectionModel.Select)
 
     def __setup_widget_ui(self):
-        '''
+        '''This method is meant to initialize UI elements into the main
+        TreeWidget
         '''
         for tree_item_name in _tree_item_list:
             tree_item = QtGui.QTreeWidgetItem(self)
@@ -37,7 +42,10 @@ class OptionsTreeWidget(QtGui.QTreeWidget):
         self.itemClicked.connect(self.show_custom_configuration_content)
 
     def show_custom_configuration_content(self, item):
-        '''
+        '''This method is meant to dynamically load (using reflection) the new
+        configuration panel based on what is selected in the treeview.
+
+        :param item: The clicked QTreeWidgetItem item from this QtreeWidget
         '''
         mod = __import__('views.dialog.options.treeview', fromlist=_fromList)
         if self.configuration_widget is not None:

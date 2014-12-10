@@ -1,7 +1,7 @@
 '''
 Created on Dec 9, 2014
 
-@author: jafeth garcia
+@author: Jafeth Garcia
 '''
 from PyQt4 import QtCore, QtGui
 from libraries import XMLSettings
@@ -11,8 +11,12 @@ from views.dialog.options.options_tree_view import OptionsTreeWidget
 class DialogOptions(QtGui.QDialog):
 
     def __init__(self, commander_window):
-        '''
-        Constructor
+        '''Constructor
+        initialize all Configuration Dialog elements
+
+        Keyword arguments:
+        :param commander_window: an initialized instance (parent main window)
+                                 of CommanderWindow class
         '''
         super(DialogOptions, self).__init__(commander_window)
         self.commander_window = commander_window
@@ -33,7 +37,8 @@ class DialogOptions(QtGui.QDialog):
         self.__setup_dialog_ui()
 
     def __setup_dialog_ui(self):
-        '''
+        '''This method is meant to initialize UI elements into the main
+        Dialog.
         '''
         self.central_widget = QtGui.QWidget(self)
         self.central_widget.setAutoFillBackground(False)
@@ -47,12 +52,15 @@ class DialogOptions(QtGui.QDialog):
         self.__setup_button_box()
 
     def __setup_options_panel(self):
-        '''
+        '''This method is meant to set the tree view panel UI which is the
+        key to load all configuration panels in the main Dialog.
         '''
         self.option_tree_widget = OptionsTreeWidget(self)
 
     def setup_config_panel(self):
-        '''
+        '''This method initializes a main base container for the configuration panel
+        the treeview options panel is the one which will call this method
+        according the configuration panel required
         '''
         self.base_container = QtGui.QGroupBox(self.central_widget)
         self.base_container.setGeometry(QtCore.QRect(160, 0, 401, 435))
@@ -60,7 +68,7 @@ class DialogOptions(QtGui.QDialog):
         self.base_container_layout = QtGui.QVBoxLayout(self.base_container)
 
     def __setup_button_box(self):
-        '''
+        '''This method is meant to set the button group box in the main Dialog
         '''
         self.button_box = QtGui.QDialogButtonBox(self)
         self.button_box.setOrientation(QtCore.Qt.Horizontal)

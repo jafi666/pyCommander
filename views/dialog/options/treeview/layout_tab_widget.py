@@ -1,20 +1,20 @@
 '''
 Created on Dec 9, 2014
 
-@author: jafeth garcia
+@author: Jafeth Garcia
 '''
 from PyQt4 import QtGui
 
 
 class LayoutTabWidget(QtGui.QTabWidget):
 
-    '''
-    classdocs
-    '''
-
     def __init__(self, dialog_options):
-        '''
-        Constructor
+        '''Constructor
+        initialize all QTabWidget elements, meant for configuration panel
+
+        Keyword arguments:
+        :param dialog_options: an initialized instance (parent Dialog)
+                               of DialogOptions class
         '''
         super(LayoutTabWidget, self).__init__(dialog_options.base_container)
 
