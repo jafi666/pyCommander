@@ -34,7 +34,6 @@ class WindowMenuBar(QtGui.QMenuBar):
         """
         self.menuFile = QtGui.QMenu(self)
         self.menuFile.setTitle("Files")
-        self.menuFile.addSeparator()
 
         # variable to store the add new file connection
         add_new_file_con = self.commander_window.file_manager.add_new_file
@@ -46,6 +45,7 @@ class WindowMenuBar(QtGui.QMenuBar):
         action_quit = self.create_menu_bar_action("Quit", "Ctrl+Q",
                                                   "Exit from Application",
                                                   QtGui.qApp.quit)
+        self.menuFile.addSeparator()
         self.menuFile.addAction(action_quit)
 
         self.addAction(self.menuFile.menuAction())
@@ -56,6 +56,12 @@ class WindowMenuBar(QtGui.QMenuBar):
         """
         self.menuConfiguration = QtGui.QMenu(self)
         self.menuConfiguration.setTitle("Configuration")
+
+        options = self.create_menu_bar_action(
+            "Options...", None, "", self.commander_window.open_dialog_options)
+        options.setIcon(QtGui.QIcon("resources/icon/options.png"))
+        self.menuConfiguration.addAction(options)
+
         self.addAction(self.menuConfiguration.menuAction())
 
     def setup_menu_bar_help(self):
