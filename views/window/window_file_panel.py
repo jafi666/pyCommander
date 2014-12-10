@@ -9,6 +9,7 @@ from PyQt4 import QtCore, QtGui
 from views.window.filepanel.panel_tree_view import PanelTreeView
 from views.window.filepanel.panel_file_path import PanelFilePath
 from views.window.filepanel.panel_status_label import PanelStatusLabel
+from views.dialog.dialog_file_properties import DialogFileProperties
 
 
 class WindowFilePanel(QtGui.QWidget):
@@ -30,7 +31,7 @@ class WindowFilePanel(QtGui.QWidget):
         self.goto_folder(self.tree_view.model.index(self.current_folder_path))
         commander_window.body_layout.addWidget(self)
 
-        self.setup_connections()
+        #self.setup_connections()
 
     def set_current_folder(self, current_folder_path=""):
         '''Initialize current folder path and name to be used as reference
@@ -102,16 +103,23 @@ class WindowFilePanel(QtGui.QWidget):
             self.tab.setTabText(
                 self.tab.indexOf(self.tab_widget), self.current_folder_path)
 
+    
     def setup_connections(self):
-        '''setup the connections that will be handled by signals for this tree view
+        '''
+        setup the connections that will be handled by signals for this tree view
         used only from constructor
         '''
         self.connect(self.tree_view, QtCore.SIGNAL(
             "altEnterPressed"), self.open_properties_connection)
 
-    def open_properties_connection(self):
+
+    def open_properties(self, index):
         '''should open the dialog with selected item(s) in the tree to show
         their properties
         TODO: functionality should be included in future iterations
         '''
-        pass
+        print "calling to open_properties"
+        parent_index = index.model().parent(index)
+        self.dialog_properties = DialogFileProperties()
+        print parent_index
+

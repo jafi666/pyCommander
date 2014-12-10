@@ -25,6 +25,7 @@ class TreeviewConnection(object):
         self.panel_tree_view.clicked.connect(self.clicked_connection)
         self.panel_tree_view.connect(self.panel_tree_view, QtCore.SIGNAL(
             "spacePressed"), self.treeview_toggle_row)
+        
 
     def double_clicked_connection(self, index):
         '''this method visually goes deep when current item in the tree is a

@@ -62,6 +62,9 @@ class PanelTreeView(QtGui.QTreeView):
         if event.key() == QtCore.Qt.Key_Backspace:
             self.emit(QtCore.SIGNAL("backspacePressed"), self.currentIndex())
             return True
+        if event.key() == QtCore.Qt.Key_Enter:
+            self.emit(QtCore.SIGNAL("altPressed"), self.currentIndex())
+        
 
         return False
 
@@ -76,5 +79,15 @@ class PanelTreeView(QtGui.QTreeView):
         """this method is going to handle key sequence handling, in order to
         have key shortcuts over treeview
         """
+        
+        print "KeyPressEventPanelTreeView"
+        if event.key() == QtCore.Qt.Key_Enter and ( event.modifiers() & QtCore.Qt.ALT ):
+             print 'BOTH' # Or your actual action code
+        
+        if event.key() == QtCore.Qt.Key_Enter:
+             print 'enter' # Or your actual action code
+             
+        if event.key() == QtCore.Qt.ALT:
+             print 'BOTH' # Or your actual action code
         # TODO: Add checks for key sequences over treeview.
         return super(PanelTreeView, self).keyPressEvent(event)

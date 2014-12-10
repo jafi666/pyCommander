@@ -9,6 +9,7 @@ from views.window.window_menu_bar import WindowMenuBar
 from views.window.window_footer_panel import WindowFooterPanel
 from views.window.window_file_manager import WindowFileManager
 from views.window.window_config import WindowConfig
+from views.dialog.dialog_file_properties import DialogFileProperties
 
 
 class CommanderWindow(QtGui.QMainWindow):
@@ -30,6 +31,7 @@ class CommanderWindow(QtGui.QMainWindow):
         Used only from constructor
         """
         self.file_manager = WindowFileManager(self)
+        self.dialog_file_properties = DialogFileProperties()
 
         self.central_widget = QtGui.QWidget(self)
         self.central_widget.setAutoFillBackground(False)
