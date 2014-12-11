@@ -9,8 +9,6 @@ from PyQt4 import QtCore, QtGui
 from views.window.filepanel.panel_tree_view import PanelTreeView
 from views.window.filepanel.panel_file_path import PanelFilePath
 from views.window.filepanel.panel_status_label import PanelStatusLabel
-from views.window.window_file_manager import WindowFileManager
-from models.file_operation import FileOperation
 
 
 class WindowFilePanel(QtGui.QWidget):
