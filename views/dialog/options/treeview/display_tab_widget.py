@@ -5,8 +5,32 @@ Created on Dec 9, 2014
 '''
 from PyQt4 import QtGui, QtCore
 
+(VIEWABLE_COLUMN, NOT_VIEWABLE_COLUMN) = (1, 0)
+CUSTOM_COLUMN_TAB_TITLE = "Custom Columns"
+CUSTOM_COLUMN_GROUP_BOX_TITLE = "Viewable Columns"
+
+_custom_columns = {
+    "name": {
+        "text": "Column name",
+        "xpath": "treeview/showColumns/name"
+    },
+    "size": {
+        "text": "Column size",
+        "xpath": "treeview/showColumns/size"
+    },
+    "type": {
+        "text": "Column type",
+        "xpath": "treeview/showColumns/type"
+    },
+    "date_modified": {
+        "text": "Column date mofidied",
+        "xpath": "treeview/showColumns/dateModified"
+    }
+}
+
 
 class DisplayTabWidget(QtGui.QTabWidget):
+
     '''
     This class in particular will handle all configuration related Display
     options
@@ -27,7 +51,7 @@ class DisplayTabWidget(QtGui.QTabWidget):
         self.custom_columns_layout.setAlignment(QtCore.Qt.AlignTop)
 
         self.__load_custom_columns()
-        self.addTab(self.tab_custom_columns, "Custom columns")
+        self.addTab(self.tab_custom_columns, CUSTOM_COLUMN_TAB_TITLE)
 
         self.dialog_options.base_container_layout.addWidget(self)
 
@@ -36,24 +60,29 @@ class DisplayTabWidget(QtGui.QTabWidget):
         it will be created customer column check boxes here
         '''
         group_box = QtGui.QGroupBox(self.tab_custom_columns)
-        group_box.setTitle("Viewable Columns")
+        group_box.setTitle(CUSTOM_COLUMN_GROUP_BOX_TITLE)
         group_layout = QtGui.QVBoxLayout(group_box)
 
         checkbox_name = self.configure_custom_column_checkbox(
-            group_box, 0, "Column name", "treeview/showColumns/name")
+            group_box, 0,
+            _custom_columns["name"]["text"], _custom_columns["name"]["xpath"])
         checkbox_name.setEnabled(False)
         group_layout.addWidget(checkbox_name)
 
         checkbox_size = self.configure_custom_column_checkbox(
-            group_box, 1, "Column size", "treeview/showColumns/size")
+            group_box, 1,
+            _custom_columns["size"]["text"], _custom_columns["size"]["xpath"])
         group_layout.addWidget(checkbox_size)
 
         checkbox_type = self.configure_custom_column_checkbox(
-            group_box, 2, "Column type", "treeview/showColumns/type")
+            group_box, 2,
+            _custom_columns["type"]["text"], _custom_columns["type"]["xpath"])
         group_layout.addWidget(checkbox_type)
 
         checkbox_date = self.configure_custom_column_checkbox(
-            group_box, 3, "Column size", "treeview/showColumns/dateModified")
+            group_box, 3,
+            _custom_columns["date_modified"]["text"],
+            _custom_columns["date_modified"]["xpath"])
         group_layout.addWidget(checkbox_date)
         self.custom_columns_layout.addWidget(group_box)
 
@@ -69,6 +98,7 @@ class DisplayTabWidget(QtGui.QTabWidget):
         :param text: string value to be set in the checkbox text.
         :param xpath: string path to access the column configuration in the
         config.xml file (example: 'treeview/showColumns/dateModified')
+        :return QCheckBox: returns a configured initialized check box object
         '''
         checkbox = QtGui.QCheckBox(parent)
         checkbox.setText(text)
@@ -96,11 +126,11 @@ class DisplayTabWidget(QtGui.QTabWidget):
         if checkbox.isChecked():
             commander_window.tab_left.tree_view.showColumn(column)
             commander_window.tab_right.tree_view.showColumn(column)
-            new_config_value = 1
+            new_config_value = VIEWABLE_COLUMN
         else:
             commander_window.tab_left.tree_view.hideColumn(column)
             commander_window.tab_right.tree_view.hideColumn(column)
-            new_config_value = 0
+            new_config_value = NOT_VIEWABLE_COLUMN
 
         self.dialog_options.xml.put(xpath, new_config_value)
         self.dialog_options.xml.save()

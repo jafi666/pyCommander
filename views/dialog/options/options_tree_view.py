@@ -6,7 +6,7 @@ Created on Dec 9, 2014
 from PyQt4 import QtCore, QtGui
 from views.dialog.options.treeview import LayoutTabWidget
 
-_fromList = ["DisplayTabWidget", "LayoutTabWidget"]
+_from_list = ["DisplayTabWidget", "LayoutTabWidget"]
 _tree_item_list = ["Layout", "Display"]
 
 
@@ -47,7 +47,7 @@ class OptionsTreeWidget(QtGui.QTreeWidget):
 
         :param item: The clicked QTreeWidgetItem item from this QtreeWidget
         '''
-        mod = __import__('views.dialog.options.treeview', fromlist=_fromList)
+        mod = __import__('views.dialog.options.treeview', fromlist=_from_list)
         if self.configuration_widget is not None:
             self.configuration_widget.setParent(None)
 

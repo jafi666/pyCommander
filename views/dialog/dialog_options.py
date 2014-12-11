@@ -24,13 +24,14 @@ class DialogOptions(QtGui.QDialog):
         self.size = QtCore.QSize(580, 490)
         self.setWindowTitle("Configuration")
         self.resize(self.size)
-        sizePolicy = QtGui.QSizePolicy(
+        self.resize(self.size)
+        size_policy = QtGui.QSizePolicy(
             QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
+        size_policy.setHorizontalStretch(0)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
 
-        self.setSizePolicy(sizePolicy)
+        self.setSizePolicy(size_policy)
         self.setMinimumSize(self.size)
         self.setMaximumSize(self.size)
 
