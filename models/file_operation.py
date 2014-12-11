@@ -24,12 +24,7 @@ class FileOperation(object):
         except:
             return False
 
-    def rename_file(self, old_filename, new_filename):
-        try:
-            os.rename(old_filename, new_filename)
-            return True
-        except:
-            return False
+
 
 
 

@@ -15,7 +15,6 @@ class WindowFileManager(QtGui.QWidget):
         super(WindowFileManager, self).__init__()
         self.commander_window = commander_window
         self.file_operation = FileOperation()
-        self.window_file_panel = WindowFilePanel(self.comander_window)
 
     def add_new_file(self):
         '''
@@ -66,17 +65,3 @@ class WindowFileManager(QtGui.QWidget):
         QtGui.QMessageBox.warning(self, dialog_name,
                                    dialog_message)
 
-    def rename_file_dialog(self):
-        '''
-        '''
-        filename, ok = QtGui.QInputDialog.getText(
-            self, 'Create new file', 'Enter a file name')
-        if ok:
-            if str(filename) != '':
-                new_filename = str(filename)
-                self.file_operation.rename_file(old_filename, new_filename)
-            else:
-                self.show_error_message("ERROR", "File name cannot be empty")
-                self.add_new_file()
-        else:
-            return None

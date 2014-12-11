@@ -104,31 +104,6 @@ class WindowFilePanel(QtGui.QWidget):
             self.tab.setTabText(
                 self.tab.indexOf(self.tab_widget), self.current_folder_path)
 
-    def rename_file_selected(self, index):
-        '''
-        '''
-        self.file_operation = FileOperation()
-        file_selected_index = index.model().index(
-            index.row(), 0, index.model().parent(index))
-
-        print file_selected_index
-
-        if (str(self.tree_view.model.filePath(file_selected_index))):
-
-            #filename = self.commander_window.file_manager.rename_file_dialog()
-            #self.file_operation.rename_file(str(self.tree_view.model.filePath(left_index)), "ite")
-            # self.tree_view.bla
-
-            print str(self.tree_view.model.filePath(file_selected_index))
-            return str(self.tree_view.model.filePath(file_selected_index))
-
-#                   node = self.dbt_model.nodeFromIndex(index)
-#        if node.node_kind.count('group'):
-#            if not self.isExpanded(index):
-#                self.expand(index)
-#        elif not node.has_view:
-#            self.vtapp.nodeOpen(index)
-
     def setup_connections(self):
         '''setup the connections that will be handled by signals for this tree view
         used only from constructor

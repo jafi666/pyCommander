@@ -41,6 +41,7 @@ class TreeviewConnection(object):
     def clicked_connection(self, index):
         """this method is meant to identify a click event over a row into
         the main treeview so that it can be handled accordingly
+        If the row is a file, then the File name will be editable
 
         Keyword arguments:
         :param index: QModelIndex where clicked event happened
@@ -49,8 +50,8 @@ class TreeviewConnection(object):
         if event_button == QtCore.Qt.RightButton:
             self.treeview_toggle_row(index)
 
-        if not index.model().isDir(index) and event_button == QtCore.Qt.LeftButton:
-            self.panel_tree_view.window_file_panel.rename_file(index)
+        if not index.model().isDir(index) and event_button == QtCore.Qt.LeftButton and index.column() == 0:
+           self.panel_tree_view.edit(index)
 
     def treeview_toggle_row(self, index):
         """This method selects and deselects a row into the treevieww main attribute

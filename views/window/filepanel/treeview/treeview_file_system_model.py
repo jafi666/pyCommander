@@ -15,3 +15,4 @@ class TreeviewFileSystemModel(QtGui.QFileSystemModel):
         super(TreeviewFileSystemModel, self).__init__()
         self.panel_tree_view = panel_tree_view
         self.insertColumn(self.columnCount(self.index(0, 0)))
+        self.setReadOnly(False)
