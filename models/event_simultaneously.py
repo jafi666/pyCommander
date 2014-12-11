@@ -27,7 +27,6 @@ class Window(QtGui.QWidget):
             print('Click')
     
     def keyPressEvent(self, event):
-        if event.key.
         self.firstrelease = True 
         astr = str(event.key())
         self.keylist.append(astr)
