@@ -43,15 +43,8 @@ class WindowMenuBar(QtGui.QMenuBar):
                                                       "Create a new file",
                                                       add_new_file_con)
         
-        open_file_attributes = self.commander_window.dialog_file_properties.showDialog
-        action_file_attributes = self.create_menu_bar_action("File Properties",
-                                                      "Ctrl+E",
-                                                      "View File Properties",
-                                                      open_file_attributes)
-        
         
         self.menuFile.addAction(action_new_file)
-        self.menuFile.addAction(action_file_attributes)
         action_quit = self.create_menu_bar_action("Quit", "Ctrl+Q",
                                                   "Exit from Application",
                                                   QtGui.qApp.quit)

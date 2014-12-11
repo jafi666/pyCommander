@@ -4,6 +4,7 @@ Created on Dec 06, 2014
 @author: JorgeX
 '''
 from PyQt4 import QtGui, QtCore
+#from views.dialog.dialog_file_properties import DialogFileProperties
 
 class Window(QtGui.QWidget):
     def __init__(self):
@@ -26,7 +27,8 @@ class Window(QtGui.QWidget):
             print('Click')
     
     def keyPressEvent(self, event):
-        self.firstrelease = True
+        if event.key.
+        self.firstrelease = True 
         astr = str(event.key())
         self.keylist.append(astr)
 
