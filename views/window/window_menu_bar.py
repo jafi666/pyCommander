@@ -42,8 +42,6 @@ class WindowMenuBar(QtGui.QMenuBar):
                                                       "Ctrl+N",
                                                       "Create a new file",
                                                       add_new_file_con)
-        
-        
         self.menuFile.addAction(action_new_file)
         action_quit = self.create_menu_bar_action("Quit", "Ctrl+Q",
                                                   "Exit from Application",

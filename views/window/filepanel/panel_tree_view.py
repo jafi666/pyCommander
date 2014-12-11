@@ -24,11 +24,17 @@ class PanelTreeView(QtGui.QTreeView):
         self.window_file_panel = window_file_panel
         self.model = TreeviewFileSystemModel(self)
 
+        self.timer = QtCore.QTimer()
+        self.timer.setInterval(250)
+        self.timer.setSingleShot(True)
+        self.timer.timeout.connect(self.timeout)
+        self.left_click_count = self.right_click_count = 0
+
         self.setModel(self.model)
         self.setItemsExpandable(False)
         self.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.setSelectionMode(QtGui.QAbstractItemView.NoSelection)
-        
+
         self.keylist = []
         self.new_list = []
 
@@ -70,7 +76,6 @@ class PanelTreeView(QtGui.QTreeView):
             return True
         if event.key() == QtCore.Qt.Key_Enter:
             self.emit(QtCore.SIGNAL("altPressed"), self.currentIndex())
-        
 
         return False
 
@@ -85,31 +90,32 @@ class PanelTreeView(QtGui.QTreeView):
         """this method is going to handle key sequence handling, in order to
         have key shortcuts over treeview
         """
-        #print "KeyPressEventPanelTreeView"
+        # print "KeyPressEventPanelTreeView"
         self.first_release = True
         key_pressed = str(event.key())
         self.keylist.append(key_pressed)
 
         return super(PanelTreeView, self).keyPressEvent(event)
-    
+
     def keyReleaseEvent(self, event):
-        
-        if self.first_release == True: 
+
+        if self.first_release == True:
             self.processmultikeys(self.keylist)
-    
+
         self.first_release = False
-        
+
         if len(self.keylist) >= 1:
             del self.keylist[-1]
-    
-    def processmultikeys(self,keyspressed):
-        
+
+    def processmultikeys(self, keyspressed):
+
         if(len(self.keylist) > 1):
             first_value = self.keylist[0]
             second_value = self.keylist[1]
-            #print  first_value, type(first_value), second_value, type(second_value)
-            if first_value =='16777251' and second_value == '16777220': 
-               print "more than 2 keys with Alt + Enter:"
-               #print  first_value, second_value
-               self.dialog_file_properties.initUI() # here calling to the dialog hat should have the properties
- 
+            # print  first_value, type(first_value), second_value,
+            # type(second_value)
+            if first_value == '16777251' and second_value == '16777220':
+                print "more than 2 keys with Alt + Enter:"
+                # print  first_value, second_value
+                # here calling to the dialog hat should have the properties
+                self.dialog_file_properties.initUI()
