@@ -5,7 +5,7 @@ Created on 25/11/2014
 '''
 import os
 from PyQt4 import QtCore, QtGui
-
+from panel_double_click_path import PanelDoubleClickPath
 
 class PanelFilePath(QtGui.QWidget):
 
@@ -32,8 +32,8 @@ class PanelFilePath(QtGui.QWidget):
         self.path_layout.setMargin(0)
         self.path_layout.setSpacing(0)
 
-        self.path_line_edit = QtGui.QLineEdit(self)
-        self.path_line_edit.setEnabled(True)
+        self.path_line_edit = PanelDoubleClickPath(self)
+        self.path_line_edit.setReadOnly(True)
         self.path_layout.addWidget(self.path_line_edit)
 
         self.push_up_dir = QtGui.QPushButton(self)
@@ -71,3 +71,4 @@ class PanelFilePath(QtGui.QWidget):
             edit_path.replace("/", "//")
             self.window_file_panel.goto_folder(
                 self.window_file_panel.tree_view.model.index(edit_path))
+            self.path_line_edit.setReadOnly(True)

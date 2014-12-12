@@ -17,8 +17,10 @@ class TreeviewConfig(object):
         :param panel_tree_view: an initialized instance (parent TreeView)
                                 of PanelTreeView class
         '''
+        config_file_path = "config/config.xml"
         self.panel_tree_view = panel_tree_view
-        self.xml = XMLSettings("config/config.xml")
+        self.xml = XMLSettings(config_file_path)
+        self.sort_columns()
         self.load_columns()
 
     def load_columns(self):
@@ -40,3 +42,9 @@ class TreeviewConfig(object):
         self.panel_tree_view.showColumn(3)
         if not column_date_modified:
             self.panel_tree_view.hideColumn(3)
+
+    def sort_columns(self):
+        '''Enable sorting for columns of tree view, by default the columns are sorted
+         according to first column descending
+        '''
+        self.panel_tree_view.setSortingEnabled(True)

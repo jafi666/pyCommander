@@ -6,6 +6,7 @@ Created on Nov 25, 2014
 import os
 
 from PyQt4 import QtCore, QtGui
+from os.path import expanduser
 from views.window.filepanel.panel_tree_view import PanelTreeView
 from views.window.filepanel.panel_file_path import PanelFilePath
 from views.window.filepanel.panel_status_label import PanelStatusLabel
@@ -41,9 +42,9 @@ class WindowFilePanel(QtGui.QWidget):
         '''
         if current_folder_path == "":
             # when no default current folder path is passed as argument
-            # it gets the current working directory folder path
-            current_folder_path = os.getcwd()
-            current_folder_name = os.path.basename(os.getcwd())
+            # it gets the user's home directory
+            current_folder_path = expanduser("~")
+            current_folder_name = os.path.basename(current_folder_path)
         else:
             current_folder_name = os.path.basename(current_folder_path)
 
