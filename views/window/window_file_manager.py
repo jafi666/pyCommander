@@ -8,6 +8,7 @@ from PyQt4 import QtGui
 from models.file_operation import FileOperation
 
 
+
 class WindowFileManager(QtGui.QWidget):
 
     def __init__(self, commander_window):
