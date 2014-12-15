@@ -9,6 +9,7 @@ from views.window.window_menu_bar import WindowMenuBar
 from views.window.window_footer_panel import WindowFooterPanel
 from views.window.window_file_manager import WindowFileManager
 from views.window.window_config import WindowConfig
+from views.dialog.dialog_options import DialogOptions
 
 
 class CommanderWindow(QtGui.QMainWindow):
@@ -30,6 +31,7 @@ class CommanderWindow(QtGui.QMainWindow):
         Used only from constructor
         """
         self.file_manager = WindowFileManager(self)
+        self.dialog_options = DialogOptions(self)
 
         self.central_widget = QtGui.QWidget(self)
         self.central_widget.setAutoFillBackground(False)
@@ -120,3 +122,8 @@ class CommanderWindow(QtGui.QMainWindow):
         self.tab_left.active = False
         self.tab_right.active = True
         self.tab_right.tree_view.setFocus()
+
+    def open_dialog_options(self):
+        '''
+        '''
+        self.dialog_options.exec_()
