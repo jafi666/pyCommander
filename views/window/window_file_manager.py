@@ -8,7 +8,6 @@ from PyQt4 import QtGui
 from models.file_operation import FileOperation
 
 
-
 class WindowFileManager(QtGui.QWidget):
 
     def __init__(self, commander_window):
@@ -63,5 +62,4 @@ class WindowFileManager(QtGui.QWidget):
         self.show_error_message("ERROR", "File name cannot be empty")
         '''
         QtGui.QMessageBox.warning(self, dialog_name,
-                                   dialog_message)
-
+                                  dialog_message)

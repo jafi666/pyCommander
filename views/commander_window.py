@@ -124,6 +124,28 @@ class CommanderWindow(QtGui.QMainWindow):
         self.tab_right.tree_view.setFocus()
 
     def open_dialog_options(self):
-        '''
+        '''Opens the dialog for configuration admin
         '''
         self.dialog_options.exec_()
+
+    def select_all_files(self):
+        '''Select all files and folders from active panel
+        '''
+        if (self.tab_left.active):
+            return self.tab_left.tree_view.selectAll()
+        elif (self.tab_right.active):
+            return self.tab_right.tree_view.selectAll()
+        else:
+            QtGui.QMessageBox.warning(
+                self, "Notice", "You must select a panel first")
+
+    def unselect_all_files(self):
+        '''Unselect all files and folders from active panel
+        '''
+        if (self.tab_left.active):
+            return self.tab_left.tree_view.clearSelection()
+        elif (self.tab_right.active):
+            return self.tab_right.tree_view.clearSelection()
+        else:
+            QtGui.QMessageBox.warning(
+                self, "Notice", "You must select a panel first")

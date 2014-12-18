@@ -7,6 +7,7 @@ import os
 from PyQt4 import QtCore, QtGui
 from panel_double_click_path import PanelDoubleClickPath
 
+
 class PanelFilePath(QtGui.QWidget):
 
     def __init__(self, window_file_panel):

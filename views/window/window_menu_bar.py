@@ -25,6 +25,7 @@ class WindowMenuBar(QtGui.QMenuBar):
         used only from constructor
         """
         self.setup_menu_bar_file()
+        self.setup_menu_bar_command()
         self.setup_menu_bar_configuration()
         self.setup_menu_bar_help()
 
@@ -32,8 +33,8 @@ class WindowMenuBar(QtGui.QMenuBar):
         """This method is meant to setup up the main menu Files for menu bar
         used only from constructor
         """
-        self.menuFile = QtGui.QMenu(self)
-        self.menuFile.setTitle("Files")
+        self.menu_file = QtGui.QMenu(self)
+        self.menu_file.setTitle("Files")
 
         # variable to store the add new file connection
         add_new_file_con = self.commander_window.file_manager.add_new_file
@@ -41,42 +42,94 @@ class WindowMenuBar(QtGui.QMenuBar):
                                                       "Ctrl+N",
                                                       "Create a new file",
                                                       add_new_file_con)
-        self.menuFile.addAction(action_new_file)
+        action_new_file.setIcon(QtGui.QIcon("resources/icon/new.png"))
+        self.menu_file.addAction(action_new_file)
+        self.menu_file.addSeparator()
+
+        action_select_all = self.create_menu_bar_action("Select All Files",
+                                                        "Ctrl+Num++",
+                                                        "Select all files",
+                                                        self.commander_window.select_all_files)
+        action_select_all.setIcon(QtGui.QIcon("resources/icon/selectall.png"))
+        self.menu_file.addAction(action_select_all)
+
+        action_unselect_all = self.create_menu_bar_action("Unselect All Files",
+                                                          "Ctrl+Num+-",
+                                                          "Unselect all files",
+                                                          self.commander_window.unselect_all_files)
+        self.menu_file.addAction(action_unselect_all)
+        action_rename_tool = self.create_menu_bar_action("Multi-Rename Tool...",
+                                                         "Ctrl+M")
+        action_rename_tool.setIcon(QtGui.QIcon("resources/icon/mrename.png"))
+        self.menu_file.addAction(action_rename_tool)
+        self.menu_file.addSeparator()
         action_quit = self.create_menu_bar_action("Quit", "Ctrl+Q",
                                                   "Exit from Application",
                                                   QtGui.qApp.quit)
-        self.menuFile.addSeparator()
-        self.menuFile.addAction(action_quit)
+        self.menu_file.addAction(action_quit)
 
-        self.addAction(self.menuFile.menuAction())
+        self.addAction(self.menu_file.menuAction())
+
+    def setup_menu_bar_command(self):
+        """This method is meant to setup up the main menu Commands for
+        menu bar used only from constructor
+        """
+        self.menu_command = QtGui.QMenu(self)
+        self.menu_command.setTitle("Commands")
+        action_search = self.create_menu_bar_action(
+            "Search...", "Alt+F7")
+        action_search.setIcon(
+            QtGui.QIcon("resources/icon/search.png"))
+        self.menu_command.addAction(action_search)
+
+        action_navigation_up = self.create_menu_bar_action(
+            "Go up folder")
+        action_navigation_up.setIcon(
+            QtGui.QIcon("resources/icon/cdtoparent.png"))
+        self.menu_command.addAction(action_navigation_up)
+        self.menu_command.addSeparator()
+
+        action_list_view = self.create_menu_bar_action(
+            "Full List View", "Ctrl+F2")
+        action_list_view.setIcon(
+            QtGui.QIcon("resources/icon/detailview.png"))
+        self.menu_command.addAction(action_list_view)
+
+        action_icon_view = self.create_menu_bar_action(
+            "Thumbnail view", "Ctrl+Shift+F1")
+        action_icon_view.setIcon(
+            QtGui.QIcon("resources/icon/iconview.png"))
+        self.menu_command.addAction(action_icon_view)
+
+        self.addAction(self.menu_command.menuAction())
 
     def setup_menu_bar_configuration(self):
         """This method is meant to setup up the main menu Configuration for
         menu bar used only from constructor
         """
-        self.menuConfiguration = QtGui.QMenu(self)
-        self.menuConfiguration.setTitle("Configuration")
+        self.menu_configuration = QtGui.QMenu(self)
+        self.menu_configuration.setTitle("Configuration")
 
         options = self.create_menu_bar_action(
             "Options...", None, "", self.commander_window.open_dialog_options)
         options.setIcon(QtGui.QIcon("resources/icon/options.png"))
-        self.menuConfiguration.addAction(options)
+        self.menu_configuration.addAction(options)
 
-        self.addAction(self.menuConfiguration.menuAction())
+        self.addAction(self.menu_configuration.menuAction())
 
     def setup_menu_bar_help(self):
         """This method is meant to setup up the main menu Help for menu bar
         used only from constructor
         """
-        self.menuHelp = QtGui.QMenu(self)
-        self.menuHelp.setTitle("Help")
+        self.menu_help = QtGui.QMenu(self)
+        self.menu_help.setTitle("Help")
 
         action_about = self.create_menu_bar_action("About PyComander...", None,
                                                    "Review About PyCommander\
                                                    Information")
-        self.menuHelp.addAction(action_about)
+        self.menu_help.addAction(action_about)
 
-        self.addAction(self.menuHelp.menuAction())
+        self.addAction(self.menu_help.menuAction())
 
     def create_menu_bar_action(self, text, shortcut=None,
                                tip="", connection=None):
