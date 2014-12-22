@@ -1,6 +1,5 @@
 import os
 from PyQt4 import QtGui,QtCore
-from pintar import PicButton
 from PyQt4.QtGui import *
 from platform import system
 from smb.SMBConnection import SMBConnection
