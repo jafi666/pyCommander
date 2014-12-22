@@ -6,6 +6,9 @@ Created on 25/11/2014
 import os
 from PyQt4 import QtCore, QtGui
 from panel_double_click_path import PanelDoubleClickPath
+from subprocess import call
+from platform import system
+from panel_network_dialog import LoginNetwork
 
 class PanelFilePath(QtGui.QWidget):
 
@@ -67,8 +70,40 @@ class PanelFilePath(QtGui.QWidget):
         '''This connection visually goes to written path in the path field
         '''
         edit_path = str(self.path_line_edit.text())
-        if (os.path.exists(edit_path)):
+        try:
             edit_path.replace("/", "//")
             self.window_file_panel.goto_folder(
                 self.window_file_panel.tree_view.model.index(edit_path))
             self.path_line_edit.setReadOnly(True)
+        except AttributeError:
+            path_contatenated = edit_path.replace("\\\\","")
+            path_contatenated = path_contatenated.replace("//","")
+            if (os.system("PING -n 2  " + path_contatenated) == 0):
+                LoginNetwork(edit_path).exec_()
+                self.window_file_panel.goto_folder(
+                self.window_file_panel.tree_view.model.index(edit_path))
+            else:
+                QtGui.QMessageBox.warning(self, 'Error de red','Es posible que el nombre de la ubicacion no este bien escrito o que exista un problema con la red. Para intentar identificar y resolver problemas de red, haga clic en Diagnosticar')
+
+
+
+
+        
+        # path_vali = bs[0] + bs[0]+ edit_path
+        # print os.path.exists('\\\\localhost')
+        # print "FALSE"
+        # if (os.path.exists(path_vali)):
+        #     edit_path.replace("/", "//")
+        #     self.window_file_panel.goto_folder(
+        #         self.window_file_panel.tree_view.model.index(edit_path))
+        #     self.path_line_edit.setReadOnly(True)
+        # else:
+        #     path_contatenated = edit_path.replace("\\\\","")
+        #     path_contatenated = path_contatenated.replace("//","")
+        #     if (os.system("PING -n 2  " + path_contatenated) == 0):
+        #         LoginNetwork(edit_path).exec_()
+        #     else:
+        #         QtGui.QMessageBox.warning(self, 'Error de red','Es posible que el nombre de la ubicacion no este bien escrito o que exista un problema con la red. Para intentar identificar y resolver problemas de red, haga clic en Diagnosticar')
+    
+
+
